@@ -31,22 +31,6 @@ public class FriendListRequest extends AbstractRequest<NetworkResult<List<User>>
         return request;
     }
 
-//    @Override
-//    protected NetworkResult<List<User>> parse(ResponseBody body) throws IOException {
-//        String text = body.string();
-//        Gson gson = new Gson();
-//        NetworkResultTemp temp = gson.fromJson(text, NetworkResultTemp.class);
-//        if (temp.getCode() == 1) {
-//            Type type = new TypeToken<NetworkResult<List<User>>>(){}.getType();
-//            NetworkResult<List<User>> result = gson.fromJson(text, type);
-//            return result;
-//        } else {
-//            Type type = new TypeToken<NetworkResult<String>>(){}.getType();
-//            NetworkResult<String> result = gson.fromJson(text, type);
-//            throw new IOException(result.getResult());
-//        }
-//    }
-
     @Override
     protected Type getType() {
         return new TypeToken<NetworkResult<List<User>>>(){}.getType();
