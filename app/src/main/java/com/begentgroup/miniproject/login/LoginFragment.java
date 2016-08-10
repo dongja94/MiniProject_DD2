@@ -14,6 +14,7 @@ import com.begentgroup.miniproject.data.NetworkResult;
 import com.begentgroup.miniproject.data.User;
 import com.begentgroup.miniproject.manager.NetworkManager;
 import com.begentgroup.miniproject.manager.NetworkRequest;
+import com.begentgroup.miniproject.manager.PropertyManager;
 import com.begentgroup.miniproject.request.LoginRequest;
 
 import butterknife.BindView;
@@ -46,14 +47,17 @@ public class LoginFragment extends Fragment {
 
     @OnClick(R.id.btn_login)
     public void onLogin(View view) {
-        String email = emailView.getText().toString();
-        String password = passwordView.getText().toString();
+        final String email = emailView.getText().toString();
+        final String password = passwordView.getText().toString();
         LoginRequest request = new LoginRequest(getContext(), email, password, "1234");
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
                 User user = result.getResult();
                 Toast.makeText(getContext(), "user id : " + user.getId(), Toast.LENGTH_SHORT).show();
+                PropertyManager.getInstance().setEmail(email);
+                PropertyManager.getInstance().setPassword(password);
+                PropertyManager.getInstance().setRegistrationId("1234");
                 ((SimpleLoginActivity)getActivity()).moveMainActivity();
             }
 
