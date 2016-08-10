@@ -14,6 +14,7 @@ import com.begentgroup.miniproject.manager.NetworkManager;
 import com.begentgroup.miniproject.manager.NetworkRequest;
 import com.begentgroup.miniproject.manager.PropertyManager;
 import com.begentgroup.miniproject.request.LoginRequest;
+import com.begentgroup.miniproject.request.ProfileRequest;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -21,13 +22,34 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        ProfileRequest request = new ProfileRequest(this);
+        NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
+            @Override
+            public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
+                moveMainActivity();
+            }
+
+            @Override
+            public void onFail(NetworkRequest<NetworkResult<User>> request, int errorCode, String errorMessage, Throwable e) {
+                if (errorCode == -1) {
+                    if (errorMessage.equals("not login")) {
+                        loginSharedPreference();
+                        return;
+                    }
+                }
+                moveLoginActivity();
+            }
+        });
+    }
+
+    private void loginSharedPreference() {
         if (isAutoLogin()) {
             processAutoLogin();
         } else {
             moveLoginActivity();
         }
     }
-
     private boolean isAutoLogin() {
         String email = PropertyManager.getInstance().getEmail();
         return !TextUtils.isEmpty(email);
