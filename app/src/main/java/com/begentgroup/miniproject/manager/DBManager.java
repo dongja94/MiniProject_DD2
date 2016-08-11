@@ -74,7 +74,7 @@ public class DBManager extends SQLiteOpenHelper {
 
     ContentValues values = new ContentValues();
     public long addUser(User user) {
-        if (getUserId(user.getId()) != -1) {
+        if (getUserId(user.getId()) == -1) {
             SQLiteDatabase db = getWritableDatabase();
             values.clear();
             values.put(ChatContract.ChatUser.COLUMN_SERVER_ID, user.getId());
@@ -152,7 +152,7 @@ public class DBManager extends SQLiteOpenHelper {
                 ChatContract.ChatMessage.COLUMN_TYPE,
                 ChatContract.ChatMessage.COLUMN_MESSAGE,
                 ChatContract.ChatMessage.COLUMN_CREATED};
-        String selection = ChatContract.ChatMessage.COLUMN_USER_ID + " = ";
+        String selection = ChatContract.ChatMessage.COLUMN_USER_ID + " = ?";
         String[] args = {"" + userid};
         String sort = ChatContract.ChatMessage.COLUMN_CREATED + " ASC";
         SQLiteDatabase db = getReadableDatabase();
