@@ -27,6 +27,7 @@ public class UploadRequest extends AbstractRequest<NetworkRequest<ContentData>> 
                 .addPathSegment("upload")
                 .build();
         MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
                 .addFormDataPart("content", content);
         if (file != null) {
             builder.addFormDataPart("myFile", file.getName(),
