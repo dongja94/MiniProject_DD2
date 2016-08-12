@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.begentgroup.miniproject.data.ContentData;
+import com.begentgroup.miniproject.data.NetworkResult;
 import com.begentgroup.miniproject.manager.NetworkManager;
 import com.begentgroup.miniproject.manager.NetworkRequest;
 import com.begentgroup.miniproject.request.UploadRequest;
@@ -72,17 +73,18 @@ public class ContentAddActivity extends AppCompatActivity {
         String content = messageView.getText().toString();
         if (!TextUtils.isEmpty(content) && uploadFile != null) {
             UploadRequest request = new UploadRequest(this, content, uploadFile);
-            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkRequest<ContentData>>() {
+            NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<ContentData>>() {
                 @Override
-                public void onSuccess(NetworkRequest<NetworkRequest<ContentData>> request, NetworkRequest<ContentData> result) {
+                public void onSuccess(NetworkRequest<NetworkResult<ContentData>> request, NetworkResult<ContentData> result) {
                     Toast.makeText(ContentAddActivity.this, "success", Toast.LENGTH_SHORT).show();
                     finish();
                 }
 
                 @Override
-                public void onFail(NetworkRequest<NetworkRequest<ContentData>> request, int errorCode, String errorMessage, Throwable e) {
+                public void onFail(NetworkRequest<NetworkResult<ContentData>> request, int errorCode, String errorMessage, Throwable e) {
                     Toast.makeText(ContentAddActivity.this, "fail", Toast.LENGTH_SHORT).show();
                 }
+
             });
         }
     }

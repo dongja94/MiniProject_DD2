@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.begentgroup.miniproject.data.ContentData;
 import com.begentgroup.miniproject.data.NetworkResult;
-import com.begentgroup.miniproject.manager.NetworkRequest;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
@@ -19,7 +18,7 @@ import okhttp3.RequestBody;
 /**
  * Created by Administrator on 2016-08-12.
  */
-public class UploadRequest extends AbstractRequest<NetworkRequest<ContentData>> {
+public class UploadRequest extends AbstractRequest<NetworkResult<ContentData>> {
     MediaType jpeg = MediaType.parse("image/jpeg");
     Request request;
     public UploadRequest(Context context, String content, File file) {
