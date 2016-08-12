@@ -1,6 +1,7 @@
 package com.begentgroup.miniproject;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.begentgroup.miniproject.data.ChatContract;
+import com.begentgroup.miniproject.data.User;
 import com.begentgroup.miniproject.manager.DBManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 
 
 /**
@@ -48,6 +51,18 @@ public class ChatUserFragment extends Fragment {
         ButterKnife.bind(this, view);
         listView.setAdapter(mAdapter);
         return view;
+    }
+
+    @OnItemClick(R.id.listView)
+    public void onItemClick(int position, long id) {
+        Cursor cursor = (Cursor)listView.getItemAtPosition(position);
+        User user = new User();
+        user.setId(cursor.getLong(cursor.getColumnIndex(ChatContract.ChatUser.COLUMN_SERVER_ID)));
+        user.setEmail(cursor.getString(cursor.getColumnIndex(ChatContract.ChatUser.COLUMN_EMAIL)));
+        user.setUserName(cursor.getString(cursor.getColumnIndex(ChatContract.ChatUser.COLUMN_NAME)));
+        Intent intent = new Intent(getContext(),ChatActivity.class);
+        intent.putExtra(ChatActivity.EXTRA_USER, user);
+        startActivity(intent);
     }
 
     @Override
