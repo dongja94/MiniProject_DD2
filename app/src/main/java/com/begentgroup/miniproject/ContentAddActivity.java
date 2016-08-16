@@ -58,6 +58,8 @@ public class ContentAddActivity extends AppCompatActivity {
     private static final int RC_GET_IMAGE = 1;
     private static final int RC_CATPURE_IMAGE = 2;
 
+    private static final int INDEX_GALLERY = 0;
+    private static final int INDEX_CAMERA = 1;
     @OnClick(R.id.btn_get_image)
     public void onGetImageClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -66,10 +68,10 @@ public class ContentAddActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 switch (i) {
-                    case 0 :
+                    case INDEX_GALLERY :
                         getGalleryImage();
                         break;
-                    case 1 :
+                    case INDEX_CAMERA :
                         getCaptureImage();
                         break;
                 }
