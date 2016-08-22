@@ -37,7 +37,7 @@ public abstract class AbstractRequest<T> extends NetworkRequest<T> {
             NetworkResult<String> result = gson.fromJson(text, type);
             throw new IOException(result.getResult());
         } else {
-            T result = gson.fromJson(text, getType());
+            T result = gson.fromJson(text, getType(temp.getCode()));
             return result;
         }
     }

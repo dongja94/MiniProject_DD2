@@ -94,7 +94,8 @@ public class LoginFragment extends Fragment {
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (accessToken != null) {
             String token = accessToken.getToken();
-            FacebookLoginRequest request = new FacebookLoginRequest(getContext(), token, "12345");
+            String regid = PropertyManager.getInstance().getRegistrationId();
+            FacebookLoginRequest request = new FacebookLoginRequest(getContext(), token, regid);
             NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<Object>>() {
                 @Override
                 public void onSuccess(NetworkRequest<NetworkResult<Object>> request, NetworkResult<Object> result) {
@@ -120,7 +121,8 @@ public class LoginFragment extends Fragment {
     public void onLogin(View view) {
         final String email = emailView.getText().toString();
         final String password = passwordView.getText().toString();
-        LoginRequest request = new LoginRequest(getContext(), email, password, "1234");
+        String regid = PropertyManager.getInstance().getRegistrationId();
+        LoginRequest request = new LoginRequest(getContext(), email, password, regid);
         NetworkManager.getInstance().getNetworkData(request, new NetworkManager.OnResultListener<NetworkResult<User>>() {
             @Override
             public void onSuccess(NetworkRequest<NetworkResult<User>> request, NetworkResult<User> result) {
@@ -128,7 +130,6 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getContext(), "user id : " + user.getId(), Toast.LENGTH_SHORT).show();
                 PropertyManager.getInstance().setEmail(email);
                 PropertyManager.getInstance().setPassword(password);
-                PropertyManager.getInstance().setRegistrationId("1234");
                 ((SimpleLoginActivity)getActivity()).moveMainActivity();
             }
 
