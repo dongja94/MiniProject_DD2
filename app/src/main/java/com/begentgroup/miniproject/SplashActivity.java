@@ -69,9 +69,7 @@ public class SplashActivity extends AppCompatActivity {
     private void processFacebookLogin() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         if (!accessToken.getUserId().equals(PropertyManager.getInstance().getFacebookId())) {
-            loginManager.logOut();
-            PropertyManager.getInstance().setFacebookId("");
-            moveLoginActivity();
+            resetFacebookAndMoveLoginActivity();
             return;
         }
         if (accessToken != null) {
@@ -84,9 +82,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (result.getCode() == 1) {
                         moveMainActivity();
                     } else {
-                        loginManager.logOut();
-                        PropertyManager.getInstance().setFacebookId("");
-                        moveLoginActivity();
+                        resetFacebookAndMoveLoginActivity();
                     }
                 }
 
@@ -107,9 +103,7 @@ public class SplashActivity extends AppCompatActivity {
             public void onSuccess(LoginResult result) {
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
                 if (!accessToken.getUserId().equals(PropertyManager.getInstance().getFacebookId())) {
-                    loginManager.logOut();
-                    PropertyManager.getInstance().setFacebookId("");
-                    moveLoginActivity();
+                    resetFacebookAndMoveLoginActivity();
                     return;
                 }
                 FacebookLoginRequest request = new FacebookLoginRequest(SplashActivity.this, accessToken.getToken(),
@@ -121,17 +115,13 @@ public class SplashActivity extends AppCompatActivity {
                         if (result.getCode() == 1) {
                             moveMainActivity();
                         } else {
-                            loginManager.logOut();
-                            PropertyManager.getInstance().setFacebookId("");
-                            moveLoginActivity();
+                            resetFacebookAndMoveLoginActivity();
                         }
                     }
 
                     @Override
                     public void onFail(NetworkRequest<NetworkResult<Object>> request, int errorCode, String errorMessage, Throwable e) {
-                        loginManager.logOut();
-                        PropertyManager.getInstance().setFacebookId("");
-                        moveLoginActivity();
+                        resetFacebookAndMoveLoginActivity();
                     }
                 });
 
@@ -148,6 +138,12 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         loginManager.logInWithReadPermissions(this, null);
+    }
+
+    private void resetFacebookAndMoveLoginActivity() {
+        loginManager.logOut();
+        PropertyManager.getInstance().setFacebookId("");
+        moveLoginActivity();
     }
 
     @Override
