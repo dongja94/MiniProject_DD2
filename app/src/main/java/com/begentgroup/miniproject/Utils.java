@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Administrator on 2016-08-23.
  */
 public class Utils {
-    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd’T’HH:mm:ss.SSSZ");
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
     public static String convertTimeToString(Date date) {
         return sdf.format(date);

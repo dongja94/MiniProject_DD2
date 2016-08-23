@@ -89,8 +89,6 @@ public class MyGcmListenerService extends GcmListenerService {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();

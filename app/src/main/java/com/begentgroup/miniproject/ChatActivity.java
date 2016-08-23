@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.begentgroup.miniproject.data.ChatContract;
 import com.begentgroup.miniproject.data.NetworkResult;
@@ -68,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onFail(NetworkRequest<NetworkResult<String>> request, int errorCode, String errorMessage, Throwable e) {
+                Toast.makeText(ChatActivity.this, "fail", Toast.LENGTH_SHORT).show();
             }
         });
 //        int type = ChatContract.ChatMessage.TYPE_SEND;
