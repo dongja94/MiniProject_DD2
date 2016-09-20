@@ -39,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
         tabHost.addTab(tabHost.newTabSpec("content").setIndicator("Content"), ContentFragment.class, null);
         int index = getIntent().getIntExtra(EXTRA_TAB_INDEX, 0);
         tabHost.setCurrentTab(index);
+
+        PropertyManager.getInstance().addOnEmailChangeListener(new PropertyManager.OnEmailChangeListener() {
+            @Override
+            public void onEmailChange(String email) {
+
+            }
+        });
     }
 
     @Override

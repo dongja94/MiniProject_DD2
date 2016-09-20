@@ -6,6 +6,9 @@ import android.preference.PreferenceManager;
 
 import com.begentgroup.miniproject.MyApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2016-08-10.
  */
@@ -32,9 +35,32 @@ public class PropertyManager {
         mEditor = mPrefs.edit();
     }
 
+    public interface OnEmailChangeListener {
+        public void onEmailChange(String email);
+    }
+
+    List<OnEmailChangeListener> mListeners = new ArrayList<>();
+
+    public void addOnEmailChangeListener(OnEmailChangeListener listener) {
+        if (!mListeners.contains(listener)) {
+            mListeners.add(listener);
+        }
+    }
+
+    public void removeOnEmailChangeListener(OnEmailChangeListener listener) {
+        mListeners.remove(listener);
+    }
+
+    public void notifyEmailChanged(String email) {
+        for (OnEmailChangeListener listener : mListeners) {
+            listener.onEmailChange(email);
+        }
+    }
+
     public void setEmail(String email) {
         mEditor.putString(KEY_EMAIL, email);
         mEditor.commit();
+        notifyEmailChanged(email);
     }
 
     public String getEmail() {
